@@ -3,18 +3,16 @@ package dev.ahmedmourad.bundlizer
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.serialization.Serializable
-
+import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
-
-import org.junit.Assert.*
 
 enum class Gender {
     HUMAN, MONKEY
 }
 
 @Serializable
-data class Email(val id:String, val domain: String)
+data class Email(val id: String, val domain: String)
 
 @Serializable
 data class User(
@@ -25,6 +23,7 @@ data class User(
     val email1: Email,
     val friends: List<String>?,
     val nonFriends: List<String>,
+    val dept: Map<String, Int>,
     val gender: Gender,
     val birthday: Long,
     val salary: Double
@@ -43,6 +42,7 @@ class BundlerInstrumentedTest {
             Email("dev.ahmedmourad1", "gmail.com1"),
             null,
             listOf("literally", "everyone", "ever"),
+            mapOf("gov" to 9999, "friend" to 888, "father" to 325),
             Gender.HUMAN,
             97637467L,
             9943.654

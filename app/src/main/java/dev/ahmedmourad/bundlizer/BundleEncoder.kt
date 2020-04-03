@@ -4,6 +4,7 @@ import android.os.Bundle
 import kotlinx.serialization.CompositeEncoder
 import kotlinx.serialization.KSerializer
 import kotlinx.serialization.SerialDescriptor
+import kotlinx.serialization.StructureKind
 import kotlinx.serialization.builtins.AbstractEncoder
 
 internal class BundleEncoder(
@@ -14,9 +15,11 @@ internal class BundleEncoder(
 ) : AbstractEncoder() {
 
     private var key: String = ""
+    private var index: Int = -1
 
     override fun encodeElement(descriptor: SerialDescriptor, index: Int): Boolean {
         this.key = descriptor.getElementName(index)
+        this.index = index
         return super.encodeElement(descriptor, index)
     }
 
@@ -43,6 +46,9 @@ internal class BundleEncoder(
 
     override fun endStructure(descriptor: SerialDescriptor) {
         keyInParent?.let {
+            if (descriptor.kind in arrayOf(StructureKind.LIST, StructureKind.MAP)) {
+                bundle.putInt("\$size", index + 1)
+            }
             parentBundle?.putBundle(it, bundle)
         }
     }

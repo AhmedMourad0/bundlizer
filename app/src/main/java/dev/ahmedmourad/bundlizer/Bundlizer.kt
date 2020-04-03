@@ -7,7 +7,7 @@ import kotlinx.serialization.SerializationStrategy
 object Bundlizer {
 
     fun <T> debundle(deserializer: DeserializationStrategy<T>, bundle: Bundle): T {
-        return deserializer.deserialize(BundleDecoder(bundle, true))
+        return deserializer.deserialize(BundleDecoder(bundle, -1, true))
     }
     fun <T> bundle(serializer: SerializationStrategy<T>, value: T): Bundle {
         val bundle = Bundle(serializer.descriptor.elementsCount)

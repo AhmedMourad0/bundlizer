@@ -1,12 +1,15 @@
 package dev.ahmedmourad.bundlizer
 
 import android.os.Bundle
-import android.util.Log
-import kotlinx.serialization.*
+import kotlinx.serialization.CompositeDecoder
+import kotlinx.serialization.KSerializer
+import kotlinx.serialization.SerialDescriptor
+import kotlinx.serialization.StructureKind
 import kotlinx.serialization.builtins.AbstractDecoder
 
 internal class BundleDecoder(
     private val bundle: Bundle,
+    private val elementsCount: Int = -1,
     private val isInitializer: Boolean = true
 ) : AbstractDecoder() {
 
@@ -15,8 +18,7 @@ internal class BundleDecoder(
 
     override fun decodeElementIndex(descriptor: SerialDescriptor): Int {
 
-        Log.e("dghdfgsf", "$key   ${descriptor.elementNames()}")
-        if (++index >= descriptor.elementsCount)
+        if (++index >= elementsCount)
             return -1
 
         key = descriptor.getElementName(index)
@@ -27,18 +29,23 @@ internal class BundleDecoder(
         descriptor: SerialDescriptor,
         vararg typeParams: KSerializer<*>
     ): CompositeDecoder {
-        Log.e("dghdfgsf", key)
-        return if (isInitializer)  {
-            BundleDecoder(
-                bundle,
-                false
-            )
+
+        val b = if (isInitializer) {
+            bundle
         } else {
-            BundleDecoder(
-                bundle.getBundle(key)!!,
-                false
-            )
+            bundle.getBundle(key)!!
         }
+
+        val count = when (descriptor.kind) {
+            StructureKind.MAP, StructureKind.LIST -> b.getInt("\$size")
+            else -> descriptor.elementsCount
+        }
+
+        return BundleDecoder(
+            b,
+            count,
+            false
+        )
     }
 
     override fun endStructure(descriptor: SerialDescriptor) {
