@@ -15,11 +15,9 @@ internal class BundleEncoder(
 ) : AbstractEncoder() {
 
     private var key: String = ""
-    private var index: Int = -1
 
     override fun encodeElement(descriptor: SerialDescriptor, index: Int): Boolean {
         this.key = descriptor.getElementName(index)
-        this.index = index
         return super.encodeElement(descriptor, index)
     }
 
@@ -47,7 +45,7 @@ internal class BundleEncoder(
     override fun endStructure(descriptor: SerialDescriptor) {
         keyInParent?.let {
             if (descriptor.kind in arrayOf(StructureKind.LIST, StructureKind.MAP)) {
-                bundle.putInt("\$size", index + 1)
+                bundle.putInt("\$size", key.toInt() + 1)
             }
             parentBundle?.putBundle(it, bundle)
         }
