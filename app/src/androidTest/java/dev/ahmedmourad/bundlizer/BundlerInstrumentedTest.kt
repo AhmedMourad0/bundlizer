@@ -50,6 +50,6 @@ class BundlerInstrumentedTest {
 
         val bundledUser = user.bundle(User.serializer())
         Log.e("dev.ahmedmourad.bundlizer", bundledUser.toString())
-        assertEquals(user, bundledUser.debundle(User.serializer()))
+        assertEquals(user, bundledUser.unbundle(User.serializer()))
     }
 }

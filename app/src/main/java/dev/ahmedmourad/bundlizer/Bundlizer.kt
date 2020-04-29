@@ -6,7 +6,7 @@ import kotlinx.serialization.SerializationStrategy
 
 object Bundlizer {
 
-    fun <T> debundle(deserializer: DeserializationStrategy<T>, bundle: Bundle): T {
+    fun <T> unbundle(deserializer: DeserializationStrategy<T>, bundle: Bundle): T {
         return deserializer.deserialize(BundleDecoder(bundle, -1, true))
     }
     fun <T> bundle(serializer: SerializationStrategy<T>, value: T): Bundle {
@@ -16,8 +16,8 @@ object Bundlizer {
     }
 }
 
-fun <T> Bundle.debundle(deserializer: DeserializationStrategy<T>): T {
-    return Bundlizer.debundle(deserializer, this)
+fun <T> Bundle.unbundle(deserializer: DeserializationStrategy<T>): T {
+    return Bundlizer.unbundle(deserializer, this)
 }
 
 fun <T> T.bundle(serializer: SerializationStrategy<T>): Bundle {
