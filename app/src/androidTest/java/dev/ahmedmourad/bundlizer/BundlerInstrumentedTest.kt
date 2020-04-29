@@ -21,8 +21,8 @@ data class User(
     val isSignedIn: Boolean,
     val email: Email,
     val email1: Email,
-    val friends: List<String>?,
-    val nonFriends: List<String>,
+    val friends: List<String>,
+    val nonFriends: List<String>?,
     val dept: Map<String, Int>,
     val gender: Gender,
     val birthday: Long,
@@ -38,10 +38,10 @@ class BundlerInstrumentedTest {
             55,
             "Ahmed Mourad",
             true,
-            Email("dev.ahmedmourad", "gmail.com"),
-            Email("dev.ahmedmourad1", "gmail.com1"),
-            null,
+            Email("ahmedmourad", "gmail.com"),
+            Email("ahmedmourad1", "gmail.com1"),
             listOf("literally", "everyone", "ever"),
+            null,
             mapOf("gov" to 9999, "friend" to 888, "father" to 325),
             Gender.HUMAN,
             97637467L,
@@ -49,7 +49,7 @@ class BundlerInstrumentedTest {
         )
 
         val bundledUser = user.bundle(User.serializer())
-        Log.e("dev.ahmedmourad.Bundliz", bundledUser.toString())
+        Log.e("dev.ahmedmourad.bundlizer", bundledUser.toString())
         assertEquals(user, bundledUser.debundle(User.serializer()))
     }
 }
