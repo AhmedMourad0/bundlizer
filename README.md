@@ -66,6 +66,10 @@ val user: User = bundle.unbundle(User.serializer())
 
 - In your module-level `build.gradle`:
 ```gradle
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation "dev.ahmedmourad.bundlizer:bundlizer:0.1.0"
 }
