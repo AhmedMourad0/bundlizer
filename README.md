@@ -5,7 +5,7 @@ Android Bundle format support for Kotlinx Serialization.
 
 ## Usage
 
-Annotate your data models with @Serializable:
+Annotate your data models with `@Serializable`:
 
 ```kotlin
 import kotlinx.serialization.Serializable
