@@ -30,7 +30,7 @@ data class User(
 )
 
 @RunWith(AndroidJUnit4::class)
-class BundlerInstrumentedTest {
+class BundlizerInstrumentedTest {
     @Test
     fun encodedCorrectly() {
 
