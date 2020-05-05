@@ -28,7 +28,7 @@ data class User(
 )
 ```
 
-## To Bundle
+#### To Bundle
 
 Use `Bundlizer.bundle` or `bundle` extension function:
 
@@ -44,7 +44,7 @@ val bundle: Bundle = Bundlizer.bundle(User.serializer(), user)
 val bundle: Bundle = user.bundle(User.serializer())
 ```
 
-## From Bundle
+#### From Bundle
 
 Use `Bundlizer.unbundle` or `unbundle` extension function:
 
