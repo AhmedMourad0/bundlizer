@@ -42,9 +42,9 @@ internal class BundleDecoder(
         }
 
         return BundleDecoder(
-            b,
-            count,
-            false
+            bundle = b,
+            elementsCount = count,
+            isInitializer = false
         )
     }
 

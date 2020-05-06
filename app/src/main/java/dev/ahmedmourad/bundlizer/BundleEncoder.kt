@@ -27,17 +27,17 @@ internal class BundleEncoder(
     ): CompositeEncoder {
         return if (isInitializer) {
             BundleEncoder(
-                bundle,
-                null,
-                key,
-                false
+                bundle = bundle,
+                parentBundle = null,
+                keyInParent = key,
+                isInitializer = false
             )
         } else {
             BundleEncoder(
-                Bundle(),
-                bundle,
-                key,
-                false
+                bundle = Bundle(),
+                parentBundle = bundle,
+                keyInParent = key,
+                isInitializer = false
             )
         }
     }
