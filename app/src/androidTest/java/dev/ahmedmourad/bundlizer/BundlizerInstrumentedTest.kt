@@ -16,18 +16,33 @@ data class Email(val id: String, val domain: String)
 
 @Serializable
 data class User(
-    val id: Int,
-    val name: String,
-    val isSignedIn: Boolean,
-    val email: Email,
-    val email1: Email,
-    val friends: List<String>,
-    val nonFriends: List<String>?,
-    val nonFriends2: List<String>? = emptyList(),
-    val dept: Map<String, Int>,
-    val gender: Gender,
-    val birthday: Long,
-    val salary: Double
+    val intTest: Int,
+    val stringTest: String,
+    val booleanTest: Boolean,
+    val dataClassTest: Email,
+    val nullableDataClassTest: Email?,
+    val nullableOptionalDataClassTest: Email? = null,
+    val listTest: List<String>,
+    val listOfDataClassesTest: List<String>,
+    val nullableListTest: List<String>?,
+    val optionalListTest: List<String> = listOf("nullableOptionalListTest - 1"),
+    val optionalEmptyListTest: List<String> = emptyList(),
+    val nullableOptionalListTest: List<String>? = listOf("nullableOptionalListTest - 1"),
+    val nullableOptionalEmptyListTest: List<String>? = emptyList(),
+    val nullOptionalListTest: List<String>? = null,
+    val mapTest: Map<String, Int>,
+    val mapOfDataClassesTest: Map<String, Email>,
+    val nullableMapTest: Map<String, String>?,
+    val optionalMapTest: Map<String, String> = mapOf("optionalMapTest - k1" to "optionalMapTest - v1"),
+    val optionalEmptyMapTest: Map<String, String> = emptyMap(),
+    val nullableOptionalMapTest: Map<String, String>? = mapOf("nullableOptionalMapTest - k1" to "nullableOptionalMapTest - v1"),
+    val nullableOptionalEmptyMapTest: Map<String, String>? = emptyMap(),
+    val nullOptionalMapTest: Map<String, String>? = null,
+    val enumTest: Gender,
+    val differentEnumTest: Gender,
+    val longTest: Long,
+    val doubleTest: Double,
+    val floatTest: Float
 )
 
 @RunWith(AndroidJUnit4::class)
@@ -36,17 +51,28 @@ class BundlizerInstrumentedTest {
     fun encodedCorrectly() {
 
         val user = User(
-            id = 55,
-            name = "Ahmed Mourad",
-            isSignedIn = true,
-            email = Email("ahmedmourad", "gmail.com"),
-            email1 = Email("ahmedmourad1", "gmail.com1"),
-            friends = listOf("literally", "everyone", "ever"),
-            nonFriends = null,
-            dept = mapOf("gov" to 9999, "friend" to 888, "father" to 325),
-            gender = Gender.HUMAN,
-            birthday = 97637467L,
-            salary = 9943.654
+            intTest = 55,
+            stringTest = "Ahmed Mourad",
+            booleanTest = true,
+            dataClassTest = Email("ahmedmourad", "gmail.com"),
+            nullableDataClassTest = Email("ahmedmourad1", "gmail.com1"),
+            listTest = listOf("listTest - e1", "listTest - e2"),
+            listOfDataClassesTest = listOf(
+                "listOfDataClassesTest - e1",
+                "listOfDataClassesTest - e2"
+            ),
+            nullableListTest = listOf("nullableListTest - e1", "nullableListTest - e2"),
+            mapTest = mapOf("mapTest - k1" to 1, "mapTest - k2" to 2),
+            mapOfDataClassesTest = mapOf(
+                "mapOfDataClassesTest - k1" to Email("v1 - 1", "v1 - 2"),
+                "mapOfDataClassesTest - k2" to Email("v2 - 1", "v2 - 2")
+            ),
+            nullableMapTest = mapOf("nullableMapTest - k1" to "nullableMapTest - k2"),
+            enumTest = Gender.HUMAN,
+            differentEnumTest = Gender.MONKEY,
+            longTest = 97637467L,
+            doubleTest = 9943.654,
+            floatTest = 9934543.65534f
         )
 
         val bundledUser = user.bundle(User.serializer())
