@@ -23,6 +23,7 @@ data class User(
     val email1: Email,
     val friends: List<String>,
     val nonFriends: List<String>?,
+    val nonFriends2: List<String>? = emptyList(),
     val dept: Map<String, Int>,
     val gender: Gender,
     val birthday: Long,
@@ -35,17 +36,17 @@ class BundlizerInstrumentedTest {
     fun encodedCorrectly() {
 
         val user = User(
-            55,
-            "Ahmed Mourad",
-            true,
-            Email("ahmedmourad", "gmail.com"),
-            Email("ahmedmourad1", "gmail.com1"),
-            listOf("literally", "everyone", "ever"),
-            null,
-            mapOf("gov" to 9999, "friend" to 888, "father" to 325),
-            Gender.HUMAN,
-            97637467L,
-            9943.654
+            id = 55,
+            name = "Ahmed Mourad",
+            isSignedIn = true,
+            email = Email("ahmedmourad", "gmail.com"),
+            email1 = Email("ahmedmourad1", "gmail.com1"),
+            friends = listOf("literally", "everyone", "ever"),
+            nonFriends = null,
+            dept = mapOf("gov" to 9999, "friend" to 888, "father" to 325),
+            gender = Gender.HUMAN,
+            birthday = 97637467L,
+            salary = 9943.654
         )
 
         val bundledUser = user.bundle(User.serializer())
