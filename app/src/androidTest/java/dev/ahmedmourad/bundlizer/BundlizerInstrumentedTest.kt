@@ -12,16 +12,17 @@ enum class Gender {
 }
 
 @Serializable
-data class Email(val id: String, val domain: String)
+data class SmallDataClass(val stringTest: String, val intTest: Int)
 
 @Serializable
-data class User(
+data class BigDataClass(
     val intTest: Int,
     val stringTest: String,
-    val booleanTest: Boolean,
-    val dataClassTest: Email,
-    val nullableDataClassTest: Email?,
-    val nullableOptionalDataClassTest: Email? = null,
+    val booleanTrueTest: Boolean,
+    val booleanFalseTest: Boolean,
+    val dataClassTest: SmallDataClass,
+    val nullableDataClassTest: SmallDataClass?,
+    val nullableOptionalDataClassTest: SmallDataClass? = null,
     val listTest: List<String>,
     val listOfDataClassesTest: List<String>,
     val nullableListTest: List<String>?,
@@ -31,7 +32,7 @@ data class User(
     val nullableOptionalEmptyListTest: List<String>? = emptyList(),
     val nullOptionalListTest: List<String>? = null,
     val mapTest: Map<String, Int>,
-    val mapOfDataClassesTest: Map<String, Email>,
+    val mapOfDataClassesTest: Map<String, SmallDataClass>,
     val nullableMapTest: Map<String, String>?,
     val optionalMapTest: Map<String, String> = mapOf("optionalMapTest - k1" to "optionalMapTest - v1"),
     val optionalEmptyMapTest: Map<String, String> = emptyMap(),
@@ -48,14 +49,15 @@ data class User(
 @RunWith(AndroidJUnit4::class)
 class BundlizerInstrumentedTest {
     @Test
-    fun encodedCorrectly() {
+    fun data_is_encoded_and_then_decoded_correctly() {
 
-        val user = User(
+        val user = BigDataClass(
             intTest = 55,
-            stringTest = "Ahmed Mourad",
-            booleanTest = true,
-            dataClassTest = Email("ahmedmourad", "gmail.com"),
-            nullableDataClassTest = Email("ahmedmourad1", "gmail.com1"),
+            stringTest = "stringTest - v",
+            booleanTrueTest = true,
+            booleanFalseTest = false,
+            dataClassTest = SmallDataClass("dataClassTest - k1", 1),
+            nullableDataClassTest = SmallDataClass("nullableDataClassTest - k1", 1),
             listTest = listOf("listTest - e1", "listTest - e2"),
             listOfDataClassesTest = listOf(
                 "listOfDataClassesTest - e1",
@@ -64,8 +66,8 @@ class BundlizerInstrumentedTest {
             nullableListTest = listOf("nullableListTest - e1", "nullableListTest - e2"),
             mapTest = mapOf("mapTest - k1" to 1, "mapTest - k2" to 2),
             mapOfDataClassesTest = mapOf(
-                "mapOfDataClassesTest - k1" to Email("v1 - 1", "v1 - 2"),
-                "mapOfDataClassesTest - k2" to Email("v2 - 1", "v2 - 2")
+                "mapOfDataClassesTest - k1" to SmallDataClass("v1 - 1", 12),
+                "mapOfDataClassesTest - k2" to SmallDataClass("v2 - 1", 22)
             ),
             nullableMapTest = mapOf("nullableMapTest - k1" to "nullableMapTest - k2"),
             enumTest = Gender.HUMAN,
@@ -75,8 +77,8 @@ class BundlizerInstrumentedTest {
             floatTest = 9934543.65534f
         )
 
-        val bundledUser = user.bundle(User.serializer())
+        val bundledUser = user.bundle(BigDataClass.serializer())
         Log.e("dev.ahmedmourad.bundlizer", bundledUser.toString())
-        assertEquals(user, bundledUser.unbundle(User.serializer()))
+        assertEquals(user, bundledUser.unbundle(BigDataClass.serializer()))
     }
 }
