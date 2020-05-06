@@ -70,7 +70,7 @@ repositories {
 }
 
 dependencies {
-    implementation "dev.ahmedmourad.bundlizer:bundlizer:0.1.0"
+    implementation "dev.ahmedmourad.bundlizer:bundlizer-core:0.2.0"
 }
 ```
 
