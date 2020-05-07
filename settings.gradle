@@ -1,2 +1,3 @@
 rootProject.name='bundlizer'
 include ':app'
+include ':navigation-safe-args-compiler'
