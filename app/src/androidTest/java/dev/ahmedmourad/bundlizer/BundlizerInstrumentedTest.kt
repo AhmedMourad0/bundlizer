@@ -3,6 +3,8 @@ package dev.ahmedmourad.bundlizer
 import android.util.Log
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.nullable
+import kotlinx.serialization.builtins.serializer
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -48,6 +50,23 @@ data class BigDataClass(
 
 @RunWith(AndroidJUnit4::class)
 class BundlizerInstrumentedTest {
+
+    @Test
+    fun flat(){
+        val value = 42
+        val serializer = Int.serializer()
+        val unbundled = value.bundle(serializer).unbundle(serializer)
+        assertEquals(value,unbundled)
+    }
+
+    @Test
+    fun flatNullable(){
+        val value: Int? = null
+        val serializer = Int.serializer().nullable
+        val unbundled : Int? = value.bundle(serializer).unbundle(serializer)
+        assertEquals(value,unbundled)
+    }
+
     @Test
     fun data_is_encoded_and_then_decoded_correctly() {
 
