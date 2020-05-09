@@ -1,9 +1,11 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
+apply plugin: "com.vanniktech.maven.publish"
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compileOnly "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compileOnly "org.jetbrains.kotlin:kotlin-compiler-embeddable:$kotlin_version"
+    compileOnly "io.arrow-kt:compiler-plugin:$arrow_meta_version"
 }
 
 sourceCompatibility = JavaVersion.VERSION_1_8
