@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/sample_nav"
+    app:startDestination="@id/firstFragment">
+
+    <fragment
+        android:id="@+id/firstFragment"
+        android:name="dev.ahmedmourad.bundlizer.sample.FirstFragment"
+        android:label="fragment_first"
+        tools:layout="@layout/fragment_first" />
+    <fragment
+        android:id="@+id/secondFragment"
+        android:name="dev.ahmedmourad.bundlizer.sample.SecondFragment"
+        android:label="SecondFragment">
+        <argument
+            android:name="child"
+            app:argType="dev.ahmedmourad.bundlizer.sample.Child" />
+        <argument
+            android:name="child1"
+            app:argType="dev.ahmedmourad.bundlizer.sample.Child[]" />
+        <argument
+            android:name="s"
+            app:argType="string" />
+        <argument
+            android:name="s1"
+            app:argType="string[]" />
+        <argument
+            android:name="f"
+            app:argType="float" />
+        <argument
+            android:name="f1"
+            app:argType="float[]" />
+        <argument
+            android:name="i"
+            app:argType="integer" />
+        <argument
+            android:name="i1"
+            app:argType="integer[]" />
+        <argument
+            android:name="l"
+            app:argType="long" />
+        <argument
+            android:name="l1"
+            app:argType="long[]" />
+        <argument
+            android:name="b"
+            app:argType="boolean" />
+        <argument
+            android:name="b1"
+            app:argType="boolean[]" />
+        <argument
+            android:name="b2"
+            app:argType="boolean"
+            android:defaultValue="true" />
+        <argument
+            android:name="parent"
+            app:argType="dev.ahmedmourad.bundlizer.sample.Parent" />
+        <argument
+            android:name="parent1"
+            app:argType="dev.ahmedmourad.bundlizer.sample.Parent[]" />
+        <argument
+            android:name="parent2"
+            app:argType="dev.ahmedmourad.bundlizer.sample.Parent"
+            app:nullable="true" />
+        <argument
+            android:name="parent3"
+            app:argType="dev.ahmedmourad.bundlizer.sample.Parent[]"
+            app:nullable="true" />
+    </fragment>
+</navigation>
