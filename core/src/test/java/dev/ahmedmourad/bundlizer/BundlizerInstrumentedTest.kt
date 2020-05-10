@@ -1,13 +1,15 @@
 package dev.ahmedmourad.bundlizer
 
+import android.os.Build
 import android.util.Log
-import androidx.test.ext.junit.runners.AndroidJUnit4
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
 enum class Gender {
     HUMAN, MONKEY
@@ -48,7 +50,8 @@ data class BigDataClass(
     val floatTest: Float
 )
 
-@RunWith(AndroidJUnit4::class)
+@Config(sdk = [Build.VERSION_CODES.O_MR1]) //TODO: remove this when you upgrade robolectric to 4.3.1
+@RunWith(RobolectricTestRunner::class)
 class BundlizerInstrumentedTest {
 
     @Test
