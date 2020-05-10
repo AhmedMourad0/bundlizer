@@ -52,7 +52,7 @@ data class BigDataClass(
 
 @Config(sdk = [Build.VERSION_CODES.O_MR1]) //TODO: remove this when you upgrade robolectric to 4.3.1
 @RunWith(RobolectricTestRunner::class)
-class BundlizerInstrumentedTest {
+class BundlizerCoreUnitTest {
 
     @Test
     fun flat(){
