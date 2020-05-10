@@ -68,5 +68,13 @@
             android:name="parent3"
             app:argType="dev.ahmedmourad.bundlizer.sample.Parent[]"
             app:nullable="true" />
+        <argument
+            android:name="s2"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="s3"
+            app:argType="string[]"
+            app:nullable="true" />
     </fragment>
 </navigation>
