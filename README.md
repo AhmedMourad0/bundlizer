@@ -1,5 +1,5 @@
-Bundlizer
-=========
+Bundlizer  ![CI](https://github.com/AhmedMourad0/bundlizer/workflows/CI/badge.svg)
+===================================================================================
 
 Android Bundle format support for Kotlinx Serialization.
 
