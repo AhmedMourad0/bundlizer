@@ -1,12 +1,13 @@
 package dev.ahmedmourad.bundlizer
 
 import android.os.Bundle
-import kotlinx.serialization.CompositeEncoder
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialDescriptor
-import kotlinx.serialization.StructureKind
-import kotlinx.serialization.builtins.AbstractEncoder
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.StructureKind
+import kotlinx.serialization.encoding.AbstractEncoder
+import kotlinx.serialization.encoding.CompositeEncoder
 
+@ExperimentalSerializationApi
 internal class BundleEncoder(
     private val bundle: Bundle,
     private val parentBundle: Bundle? = null,
@@ -22,8 +23,7 @@ internal class BundleEncoder(
     }
 
     override fun beginStructure(
-        descriptor: SerialDescriptor,
-        vararg typeSerializers: KSerializer<*>
+        descriptor: SerialDescriptor
     ): CompositeEncoder {
         return if (isInitializer) {
             BundleEncoder(
@@ -98,10 +98,6 @@ internal class BundleEncoder(
 
     override fun encodeString(value: String) {
         bundle.putString(key, value)
-    }
-
-    override fun encodeUnit() {
-        bundle.putString(key, Unit.toString())
     }
 
     override fun encodeNotNullMark() {

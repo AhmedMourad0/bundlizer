@@ -1,12 +1,13 @@
 package dev.ahmedmourad.bundlizer
 
 import android.os.Bundle
-import kotlinx.serialization.CompositeDecoder
-import kotlinx.serialization.KSerializer
-import kotlinx.serialization.SerialDescriptor
-import kotlinx.serialization.StructureKind
-import kotlinx.serialization.builtins.AbstractDecoder
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.descriptors.SerialDescriptor
+import kotlinx.serialization.descriptors.StructureKind
+import kotlinx.serialization.encoding.AbstractDecoder
+import kotlinx.serialization.encoding.CompositeDecoder
 
+@ExperimentalSerializationApi
 internal class BundleDecoder(
     private val bundle: Bundle,
     private val elementsCount: Int = -1,
@@ -19,15 +20,14 @@ internal class BundleDecoder(
     override fun decodeElementIndex(descriptor: SerialDescriptor): Int {
 
         if (++index >= elementsCount)
-            return CompositeDecoder.READ_DONE
+            return CompositeDecoder.DECODE_DONE
 
         key = descriptor.getElementName(index)
         return index
     }
 
     override fun beginStructure(
-        descriptor: SerialDescriptor,
-        vararg typeParams: KSerializer<*>
+        descriptor: SerialDescriptor
     ): CompositeDecoder {
 
         val b = if (isInitializer) {
@@ -98,10 +98,6 @@ internal class BundleDecoder(
 
     override fun decodeString(): String {
         return bundle.getString(key)!!
-    }
-
-    override fun decodeUnit() {
-
     }
 
     override fun decodeValue(): Any {
