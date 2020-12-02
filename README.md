@@ -1,4 +1,4 @@
-Bundlizer  ![CI](https://github.com/AhmedMourad0/bundlizer/workflows/CI/badge.svg)
+Bundlizer  ![CI](https://github.com/AhmedMourad0/bundlizer/workflows/CI/badge.svg) [![Maven Central](https://maven-badges.herokuapp.com/maven-central/dev.ahmedmourad.bundlizer/bundlizer-core/badge.svg)](https://maven-badges.herokuapp.com/maven-central/dev.ahmedmourad.bundlizer/bundlizer-core)
 ===================================================================================
 
 Android Bundle format support for Kotlinx Serialization.
