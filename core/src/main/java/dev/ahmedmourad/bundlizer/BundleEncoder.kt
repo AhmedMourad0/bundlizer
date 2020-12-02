@@ -6,6 +6,8 @@ import kotlinx.serialization.descriptors.SerialDescriptor
 import kotlinx.serialization.descriptors.StructureKind
 import kotlinx.serialization.encoding.AbstractEncoder
 import kotlinx.serialization.encoding.CompositeEncoder
+import kotlinx.serialization.modules.EmptySerializersModule
+import kotlinx.serialization.modules.SerializersModule
 
 @ExperimentalSerializationApi
 internal class BundleEncoder(
@@ -14,6 +16,8 @@ internal class BundleEncoder(
     private val keyInParent: String? = null,
     private val isInitializer: Boolean = true
 ) : AbstractEncoder() {
+
+    override val serializersModule: SerializersModule = EmptySerializersModule
 
     private var key: String = ""
 
