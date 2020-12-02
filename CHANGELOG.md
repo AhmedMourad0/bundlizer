@@ -25,3 +25,11 @@ _2020-08-27_
 
 - Migrated to Kotlin & Kotlinx.Serialization 1.4.0
 - Migrated to Kotlinx-Serialization runtime 1.0.0-RC
+
+0.4.0
+-----
+
+_2020-12-02_
+
+- Upgraded to Kotlin & Kotlinx.Serialization 1.4.20
+- Upgraded to Kotlinx-Serialization runtime 1.0.1
