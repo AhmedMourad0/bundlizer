@@ -33,3 +33,12 @@ _2020-12-02_
 
 - Upgraded to Kotlin & Kotlinx.Serialization 1.4.20
 - Upgraded to Kotlinx-Serialization runtime 1.0.1
+
+0.5.0
+-----
+
+_2021-03-04_
+
+- Fixed bug raised in PR (#4) where top-level lists don't encode their size thus producing empty lists when unbundled
+- Upgraded to Kotlinx-Serialization runtime 1.1.0
+- Upgraded to Kotlin 1.4.31
