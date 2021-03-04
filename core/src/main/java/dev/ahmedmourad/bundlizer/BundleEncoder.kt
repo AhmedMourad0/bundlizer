@@ -47,14 +47,14 @@ internal class BundleEncoder(
     }
 
     override fun endStructure(descriptor: SerialDescriptor) {
-
-        if (keyInParent.isNullOrBlank()) {
-            return
-        }
-
+        
         if (descriptor.kind in arrayOf(StructureKind.LIST, StructureKind.MAP)) {
             val size = key.toIntOrNull()?.let { it + 1 } ?: 0
             bundle.putInt("\$size", size)
+        }
+        
+        if (keyInParent.isNullOrBlank()) {
+            return
         }
 
         parentBundle?.putBundle(keyInParent, bundle)
