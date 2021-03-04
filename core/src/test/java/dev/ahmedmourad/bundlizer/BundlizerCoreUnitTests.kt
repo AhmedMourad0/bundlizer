@@ -109,24 +109,29 @@ class BundlizerCoreUnitTest {
 
     @Test
     fun lists_are_encoded_and_then_decoded_correctly() {
-        val items = (0..10).map {
-            UUID.randomUUID().toString()
+        repeat(10) { size ->
+            val items = List(size) {
+                UUID.randomUUID().toString()
+            }
+            val bundledList = items.bundle(ListSerializer(String.serializer()))
+            Log.e("dev.ahmedmourad.bundlizer", bundledList.toString())
+            assertEquals(items, bundledList.unbundle(ListSerializer(String.serializer())))
         }
-        val bundledList = items.bundle(ListSerializer(String.serializer()))
-        Log.e("dev.ahmedmourad.bundlizer", bundledList.toString())
-        assertEquals(items, bundledList.unbundle(ListSerializer(String.serializer())))
     }
 
     @Test
     fun maps_are_encoded_and_then_decoded_correctly() {
-        val items = (0..10).map {
-            UUID.randomUUID().toString() to UUID.randomUUID().toString()
-        }.toMap()
-        val bundledList = items.bundle(MapSerializer(String.serializer(), String.serializer()))
-        Log.e("dev.ahmedmourad.bundlizer", bundledList.toString())
-        assertEquals(
-            items,
-            bundledList.unbundle(MapSerializer(String.serializer(), String.serializer()))
-        )
+        repeat(10) { size ->
+            val items = List(size) {
+                UUID.randomUUID().toString() to UUID.randomUUID().toString()
+            }.toMap()
+            val bundledList = items.bundle(MapSerializer(String.serializer(), String.serializer()))
+            Log.e("dev.ahmedmourad.bundlizer", bundledList.toString())
+            assertEquals(
+                items,
+                bundledList.unbundle(MapSerializer(String.serializer(), String.serializer()))
+            )
+        }
+
     }
 }
