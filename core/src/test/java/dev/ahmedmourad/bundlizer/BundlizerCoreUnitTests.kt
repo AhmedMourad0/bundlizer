@@ -3,6 +3,8 @@ package dev.ahmedmourad.bundlizer
 import android.os.Build
 import android.util.Log
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.builtins.ListSerializer
+import kotlinx.serialization.builtins.MapSerializer
 import kotlinx.serialization.builtins.nullable
 import kotlinx.serialization.builtins.serializer
 import org.junit.Assert.assertEquals
@@ -10,6 +12,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
+import java.util.*
 
 enum class Gender {
     HUMAN, MONKEY
@@ -102,5 +105,28 @@ class BundlizerCoreUnitTest {
         val bundledUser = user.bundle(BigDataClass.serializer())
         Log.e("dev.ahmedmourad.bundlizer", bundledUser.toString())
         assertEquals(user, bundledUser.unbundle(BigDataClass.serializer()))
+    }
+
+    @Test
+    fun lists_are_encoded_and_then_decoded_correctly() {
+        val items = (0..10).map {
+            UUID.randomUUID().toString()
+        }
+        val bundledList = items.bundle(ListSerializer(String.serializer()))
+        Log.e("dev.ahmedmourad.bundlizer", bundledList.toString())
+        assertEquals(items, bundledList.unbundle(ListSerializer(String.serializer())))
+    }
+
+    @Test
+    fun maps_are_encoded_and_then_decoded_correctly() {
+        val items = (0..10).map {
+            UUID.randomUUID().toString() to UUID.randomUUID().toString()
+        }.toMap()
+        val bundledList = items.bundle(MapSerializer(String.serializer(), String.serializer()))
+        Log.e("dev.ahmedmourad.bundlizer", bundledList.toString())
+        assertEquals(
+            items,
+            bundledList.unbundle(MapSerializer(String.serializer(), String.serializer()))
+        )
     }
 }
