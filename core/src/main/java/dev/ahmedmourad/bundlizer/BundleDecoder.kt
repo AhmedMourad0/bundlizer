@@ -23,8 +23,9 @@ internal class BundleDecoder(
 
     override fun decodeElementIndex(descriptor: SerialDescriptor): Int {
 
-        if (++index >= elementsCount)
+        if (++index >= elementsCount) {
             return CompositeDecoder.DECODE_DONE
+        }
 
         key = descriptor.getElementName(index)
         return index
