@@ -2,11 +2,12 @@ package dev.ahmedmourad.bundlizer
 
 import android.os.Build
 import android.util.Log
+import kotlinx.serialization.Polymorphic
 import kotlinx.serialization.Serializable
-import kotlinx.serialization.builtins.ListSerializer
-import kotlinx.serialization.builtins.MapSerializer
-import kotlinx.serialization.builtins.nullable
-import kotlinx.serialization.builtins.serializer
+import kotlinx.serialization.builtins.*
+import kotlinx.serialization.modules.SerializersModule
+import kotlinx.serialization.modules.polymorphic
+import kotlinx.serialization.modules.subclass
 import org.junit.Assert.assertEquals
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -53,24 +54,46 @@ data class BigDataClass(
     val floatTest: Float
 )
 
+@Serializable
+data class DataClassWithPolymorphicMap(
+    val polymorphicMapTest: Map<String, @Polymorphic Any> = mapOf(
+        "Case_1" to PolymorphicCaseOne(),
+        "Case_2" to PolymorphicCaseTwo(),
+    )
+)
+
+@Serializable
+data class PolymorphicCaseOne(val data: String = "some data 1")
+
+@Serializable
+data class PolymorphicCaseTwo(val data: String = "some data 2")
+
+private val TestSerializersModule = SerializersModule {
+    polymorphic(Any::class) {
+        subclass(PolymorphicCaseOne::class)
+        subclass(PolymorphicCaseTwo::class)
+    }
+}
+
+
 @Config(sdk = [Build.VERSION_CODES.O_MR1]) //TODO: remove this when you upgrade robolectric to 4.3.1
 @RunWith(RobolectricTestRunner::class)
 class BundlizerCoreUnitTest {
 
     @Test
-    fun flat(){
+    fun flat() {
         val value = 42
         val serializer = Int.serializer()
         val unbundled = value.bundle(serializer).unbundle(serializer)
-        assertEquals(value,unbundled)
+        assertEquals(value, unbundled)
     }
 
     @Test
-    fun flatNullable(){
+    fun flatNullable() {
         val value: Int? = null
         val serializer = Int.serializer().nullable
-        val unbundled : Int? = value.bundle(serializer).unbundle(serializer)
-        assertEquals(value,unbundled)
+        val unbundled: Int? = value.bundle(serializer).unbundle(serializer)
+        assertEquals(value, unbundled)
     }
 
     @Test
@@ -132,6 +155,17 @@ class BundlizerCoreUnitTest {
                 bundledList.unbundle(MapSerializer(String.serializer(), String.serializer()))
             )
         }
+    }
 
+    @Test
+    fun polymorphic_types_encoded_and_then_decoded_correctly() {
+        val state = DataClassWithPolymorphicMap()
+        Bundlizer.defaultSerializersModule = TestSerializersModule
+        val bundledState = state.bundle(DataClassWithPolymorphicMap.serializer())
+        Log.e("dev.ahmedmourad.bundlizer", bundledState.toString())
+        assertEquals(
+            state,
+            bundledState.unbundle(DataClassWithPolymorphicMap.serializer())
+        )
     }
 }

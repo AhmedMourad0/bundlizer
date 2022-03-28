@@ -1,6 +1,7 @@
 package dev.ahmedmourad.bundlizer
 
 import android.os.Bundle
+import dev.ahmedmourad.bundlizer.Bundlizer.defaultSerializersModule
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerializationStrategy
 import kotlinx.serialization.modules.EmptySerializersModule
@@ -71,8 +72,11 @@ object Bundlizer {
  * @param deserializer DeserializationStrategy of the T class
  * @return object of type T deserialized from bundle
  */
-fun <T> Bundle.unbundle(deserializer: DeserializationStrategy<T>): T {
-    return Bundlizer.unbundle(deserializer, this)
+fun <T> Bundle.unbundle(
+    deserializer: DeserializationStrategy<T>,
+    serializersModule: SerializersModule = defaultSerializersModule,
+): T {
+    return Bundlizer.unbundle(deserializer, this, serializersModule)
 }
 
 /**
@@ -82,6 +86,9 @@ fun <T> Bundle.unbundle(deserializer: DeserializationStrategy<T>): T {
  * @param serializer SerializationStrategy of the T class
  * @return bundle serialized from value
  */
-fun <T> T.bundle(serializer: SerializationStrategy<T>): Bundle {
-    return Bundlizer.bundle(serializer, this)
+fun <T> T.bundle(
+    serializer: SerializationStrategy<T>,
+    serializersModule: SerializersModule = defaultSerializersModule,
+): Bundle {
+    return Bundlizer.bundle(serializer, this, serializersModule)
 }
