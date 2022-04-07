@@ -1,13 +1,21 @@
 package dev.ahmedmourad.bundlizer
 
 import android.os.Bundle
+import dev.ahmedmourad.bundlizer.Bundlizer.defaultSerializersModule
 import kotlinx.serialization.DeserializationStrategy
 import kotlinx.serialization.SerializationStrategy
+import kotlinx.serialization.modules.EmptySerializersModule
+import kotlinx.serialization.modules.SerializersModule
 
 /**
  * Utility class for the Bundlizer library
  */
 object Bundlizer {
+
+    var defaultSerializersModule: SerializersModule = EmptySerializersModule
+        set(value) {
+            synchronized(Bundlizer) { field = value }
+        }
 
     /**
      * Deserialize this bundle into an object of type T
@@ -17,8 +25,18 @@ object Bundlizer {
      * @return object of type T deserialized from bundle
      */
     @JvmStatic
-    fun <T> unbundle(deserializer: DeserializationStrategy<T>, bundle: Bundle): T {
-        return deserializer.deserialize(BundleDecoder(bundle, -1, true))
+    fun <T> unbundle(
+        deserializer: DeserializationStrategy<T>,
+        bundle: Bundle,
+        serializersModule: SerializersModule = defaultSerializersModule,
+    ): T {
+        val decoder = BundleDecoder(
+            bundle = bundle,
+            elementsCount = -1,
+            isInitializer = true,
+            serializersModule = serializersModule,
+        )
+        return deserializer.deserialize(decoder)
     }
 
     /**
@@ -29,9 +47,20 @@ object Bundlizer {
      * @return bundle serialized from value
      */
     @JvmStatic
-    fun <T> bundle(serializer: SerializationStrategy<T>, value: T): Bundle {
+    fun <T> bundle(
+        serializer: SerializationStrategy<T>,
+        value: T,
+        serializersModule: SerializersModule = defaultSerializersModule,
+    ): Bundle {
         val bundle = Bundle(serializer.descriptor.elementsCount)
-        serializer.serialize(BundleEncoder(bundle, null, null, true), value)
+        val encoder = BundleEncoder(
+            bundle = bundle,
+            parentBundle = null,
+            keyInParent = null,
+            isInitializer = true,
+            serializersModule = serializersModule,
+        )
+        serializer.serialize(encoder, value)
         return bundle
     }
 }
@@ -43,8 +72,11 @@ object Bundlizer {
  * @param deserializer DeserializationStrategy of the T class
  * @return object of type T deserialized from bundle
  */
-fun <T> Bundle.unbundle(deserializer: DeserializationStrategy<T>): T {
-    return Bundlizer.unbundle(deserializer, this)
+fun <T> Bundle.unbundle(
+    deserializer: DeserializationStrategy<T>,
+    serializersModule: SerializersModule = defaultSerializersModule,
+): T {
+    return Bundlizer.unbundle(deserializer, this, serializersModule)
 }
 
 /**
@@ -54,6 +86,9 @@ fun <T> Bundle.unbundle(deserializer: DeserializationStrategy<T>): T {
  * @param serializer SerializationStrategy of the T class
  * @return bundle serialized from value
  */
-fun <T> T.bundle(serializer: SerializationStrategy<T>): Bundle {
-    return Bundlizer.bundle(serializer, this)
+fun <T> T.bundle(
+    serializer: SerializationStrategy<T>,
+    serializersModule: SerializersModule = defaultSerializersModule,
+): Bundle {
+    return Bundlizer.bundle(serializer, this, serializersModule)
 }
