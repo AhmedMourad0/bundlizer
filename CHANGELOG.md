@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.7.0
+-----
+
+_2022-04-08_
+
+- Added support for passing custom SerializersModule
+- Upgraded to Kotlinx-Serialization 1.3.2
+- Upgraded to Kotlin 1.6.10
+
 0.6.0
 -----
 
