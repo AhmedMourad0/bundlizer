@@ -4,11 +4,13 @@ Changelog
 0.7.0
 -----
 
-_2022-04-08_
+_2022-04-09_
 
 - Added support for passing custom SerializersModule
 - Upgraded to Kotlinx-Serialization 1.3.2
-- Upgraded to Kotlin 1.6.10
+- Upgraded to Kotlin 1.6.20
+- Upgraded to Android Gradle Plugin 7.1.3
+- Upgraded to Gradle 7.4.2
 
 0.6.0
 -----
