@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.8.0
+-----
+
+_2024-02-15_
+
+- Upgraded to Kotlinx-Serialization 1.6.2
+- Upgraded to Kotlin 1.9.22
+- Upgraded to Android Gradle Plugin 8.2.2
+- Upgraded to Gradle 8.2
+- Upgraded to Java 19 JVM target
+
 0.7.0
 -----
 

@@ -70,7 +70,7 @@ repositories {
 }
 
 dependencies {
-    implementation "dev.ahmedmourad.bundlizer:bundlizer-core:0.7.0"
+    implementation "dev.ahmedmourad.bundlizer:bundlizer-core:0.8.0"
 }
 ```
 
@@ -92,4 +92,3 @@ License
     limitations under the License.
 
  [snapshots]: https://oss.sonatype.org/content/repositories/snapshots/
- 
